@@ -6,11 +6,12 @@
 import os, sys, ftplib
 from time import strftime, gmtime
 
-def upload(bkarchive, host, port, ftpdir, user, passw):
-    ftp = ftplib.FTP(host,user,passw)
-    ftp.cwd(ftpdir)
-    archive = open(bkarchive,'rb')
-    ftp.storbinary('STOR ' + bkarchive, archive)
-    archive.close()
-    ftp.quit()
+class ftplib:
+    def upload(bkarchive, host, port, ftpdir, user, passw):
+        ftp = ftplib.FTP(host,user,passw)
+        ftp.cwd(ftpdir)
+        archive = open(bkarchive,'rb')
+        ftp.storbinary('STOR ' + bkarchive, archive)
+        archive.close()
+        ftp.quit()
 
