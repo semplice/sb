@@ -4,9 +4,8 @@
 # The following lines import necessary modules
 
 import os, sys, ftplib
-from time import strftime, gmtime
 
-class ftplib:
+class libftp:
     def upload(bkarchname, host, port, ftpdir, user, passw):
         ftp = ftplib.FTP(host,user,passw)
         ftp.cwd(ftpdir)

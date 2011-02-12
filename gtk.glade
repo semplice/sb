@@ -211,7 +211,7 @@
                   <object class="GtkToolbar" id="toolbar1">
                     <property name="visible">True</property>
                     <child>
-                      <object class="GtkToolButton" id="addfile_bktbtn">
+                      <object class="GtkToolButton" id="addfile_bkbtn">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Add</property>
                         <property name="use_underline">True</property>

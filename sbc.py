@@ -12,15 +12,6 @@ import os, sys, locale, gettext, libcompress, libftp
 #_ = gettext.gettext
 
 class sbcli:
-    def color(self, string):
-        colors = {"default":0, "black":30, "red":31, "green":32, "yellow":33,
-              "blue":34,"magenta":35, "cyan":36, "white":37, "black":38,
-              "black":39} #33[%colors%m
-        for color in colors:
-            color_string = "\033[%dm\033[1m" % colors[color]
-            string = string.replace("<%s>" % color, color_string).replace("</%s>" % color, "\033[0m")
-        return string
-    
     def __init__(self):
         # Help text
         self.help = """Semplice Backup 0.1
@@ -62,7 +53,16 @@ e.g.: sbc -fg /path/to/file
             print("sbc: unrecognized option '%s'" % (unrec_arg))
             print("Try `sbc --help' for more information.")
             sys.exit(1)
-            
+
+    def color(self, string):
+        colors = {"default":0, "black":30, "red":31, "green":32, "yellow":33,
+              "blue":34,"magenta":35, "cyan":36, "white":37, "black":38,
+              "black":39} #33[%colors%m
+        for color in colors:
+            color_string = "\033[%dm\033[1m" % colors[color]
+            string = string.replace("<%s>" % color, color_string).replace("</%s>" % color, "\033[0m")
+        return string
+
     def backup(self, bk_format):
         if bk_format == "--bz2":
             self.bk_file = sys.argv[sys.argv.index("--bz2")+1]
@@ -131,12 +131,16 @@ e.g.: sbc -fg /path/to/file
             self.bk_file = sys.argv[sys.argv.index("-fz")+1]
             self.bk_arch = 'zip'
         self.dest_dir = '/tmp/'
-        print(self.color('<blue>I: Backing-up with %s format...</blue>' % (self.bk_archtype)))
-        self.bk_arch_name = self.dest_dir + libcompress.compress().archname
+        self.host = 'asd'
+        self.port = 'asd'
+        self.user = 'asd'
+        self.directory = 'asd'
         bk_create = libcompress.compress()
-        bk_create.backup(self.bk_arch_name, self.dest_dir, self.bk_arch)
-        print(self.color('<blue>I: Uploading %s on %s:$s as %s in %s...</blue>' % (bk_create.archname, host, port, user, directory)))
-        libftp.upload(self.bk_arch_name, self.host, self.port, self.user, self.directory)
-        print(self.color('<green>I: Done! Uploaded your backup as</green> <cyan>%s</cyan> <green>on</green> <cyan>%s</cyan><green>!</green>' % (libcompress.compress().archname, self.host)))
+        print(self.color('<blue>I: Backing-up with %s format...</blue>' % (self.bk_arch)))
+        bk_create.backup(self.bk_file, self.dest_dir, self.bk_arch)
+        print(self.color('<blue>I: Uploading %s on %s:$s as %s in %s...</blue>' % (bk_create.archname, self.host, self.port, self.user, self.directory)))
+        bk_ftp = libftp.libftp()
+        bk_ftp.upload(self.bk_arch_name, self.host, self.port, self.user, self.directory)
+        print(self.color('<green>I: Done! Uploaded your backup as</green> <cyan>%s</cyan> <green>on</green> <cyan>%s</cyan><green>!</green>' % (bk_create.archname, self.host)))
 
 sbcli()

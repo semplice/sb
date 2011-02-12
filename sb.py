@@ -24,6 +24,9 @@ class sbGui:
 		self.pages = self.builder.get_object("pages")
 		self.about = self.builder.get_object("aboutbox")
 		self.fc_restore = self.builder.get_object("fc_restore")
+		self.addfiledlg = self.builder.get_object("fc_backup")
+		# Add file window
+		self.fc_backup_add = self.builder.get_object("fc_backup_add")
 		# Restore backup window
 		self.fcr_cancelbtn = self.builder.get_object("fc_restore_cancel")
 		self.fcr_openbtn = self.builder.get_object("fc_restore_choose")
@@ -41,6 +44,8 @@ class sbGui:
 		self.bkback2_btn = self.builder.get_object("bkback2_bkbtn")
 		self.bkback3_btn = self.builder.get_object("bkback3_bkbtn")
 		self.bkback4_btn = self.builder.get_object("bkback4_bkbtn")
+		# Page 2
+		self.addfile_btn = self.builder.get_object("addfile_bkbtn")
 		# Page 3
 		self.bz2arch = self.builder.get_object("rb_bz2")
 		self.gzarch = self.builder.get_object("rb_gz")
@@ -70,8 +75,9 @@ class sbGui:
 		# Menu bar
 		self.abtboxbtn.connect("activate", self.aboutbox)
 		self.quitbtn.connect("activate", self.quit)
+		# Add file dialog
+		#self.fc_backup_add.connect("clicked", self.addtobklist)
 		# Restore dialog
-		#self.fcr_cancelbtn.connect("clicked", self.fc_restore.hide)
 		self.fcr_openbtn.connect("clicked", self.restore_bk)
 		# Home page
 		self.startbk_btn.connect("clicked", self.page_next)
@@ -85,6 +91,8 @@ class sbGui:
 		self.bkback2_btn.connect("clicked", self.page_prev)
 		self.bkback3_btn.connect("clicked", self.page_prev)
 		self.bkback4_btn.connect("clicked", self.page_prev)
+		# Page 2
+		self.addfile_btn.connect("clicked", self.add_file)
 		# Page 5 - Start backup!
 		self.bkstart_btn.connect("clicked", self.start_bk)
 		
@@ -98,19 +106,26 @@ class sbGui:
 
 		self.builder.connect_signals(dic)
 
-	def aboutbox(self, widget):
+	def aboutbox(self, obj):
 		self.about.show()
 		result = self.about.run()
 		self.about.hide()
 		
-	def restorebox(self, widget):
+	def restorebox(self, obj):
 		self.fc_restore.show()
 		result = self.fc_restore.run()
 		self.fc_restore.hide()
-		
+
+	def add_file(self, obj):
+		self.addfiledlg.show()
+		result = self.addfiledlg.run()
+		self.addfiledlg.hide()
+				
 	def page_one(self, obj):
 		if obj == self.bkstart_btn:
 			self.lb_status.set_label("Ready.")
+			self.bkstart_btn.set_label("Start!")
+			self.bkstart_btn.connect("clicked", self.start_bk)
 			self.backuprogress.set_fraction(0)
 		self.pages.set_current_page(0)
 
@@ -180,12 +195,8 @@ class sbGui:
 			self.ftpdir = self.ftpdir_entry.get_text()
 			self.ftpuser = self.ftpuser_entry.get_text()
 			self.ftpass = self.ftpass_entry.get_text()
-			print("You have chosen to save the backup in an FTP server.")
-			print("FTP server: %s" % (self.ftpsrv))
-			print("FTP port: %s" % (self.ftport))
-			print("FTP directory: %s" % (self.ftpdir))
-			print("FTP username: %s" % (self.ftpuser))
-			print("FTP password: %s" % (self.ftpass))
+			bk_ftp = libftp.libftp()
+			bk_ftp.upload(self.bk_arch_name, self.host, self.port, self.user, self.directory)
 			self.localdest = "ftp://%s@%s:%s/%s" % (self.ftpuser, self.ftpsrv, self.ftport, self.ftpdir)
 			print("Localdest: %s" % (self.localdest))
 		self.bkstart_btn.set_label("Finish!")
@@ -200,7 +211,7 @@ class sbGui:
 		print("You have chosen to restore this archive: %s" % (self.restorefile))
 		self.pages.set_current_page(5)
 			
-	def quit(self, widget):
+	def quit(self, obj):
 		sys.exit(0)
         
 sbGui = sbGui()
