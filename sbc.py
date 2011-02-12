@@ -38,13 +38,12 @@ e.g.: sbc -fg /path/to/file
       sbc --fgz /path/to/file"""
     
         # Checks that the user has passed an argument
-        if len(sys.argv) < 1:
+        if len(sys.argv) < 2:
             print(self.help)
             sys.exit(1)
-    
         # This code analyzes the arguments given by user and executes the chosen action
         # of, if there's something wrong, shows an error to the user.
-        if "--help" in sys.argv or "-h" in sys.argv:
+        elif "--help" in sys.argv or "-h" in sys.argv:
             print(self.help)
         elif "--bz2" in sys.argv or "-b" in sys.argv:
             self.backup(sys.argv[1])
