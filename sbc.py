@@ -109,7 +109,7 @@ e.g.: sbc -fg /path/to/file
         print(self.color('<blue>I: Backing-up with %s format...</blue>' % (bk_archtype)))
         bk_create = libcompress.compress()
         bk_create.backup(self.bk_file, self.dest_dir, bk_archtype)
-        print(self.color('<green>I: Done! You can find your backup in the current working dir as</green> <cyan>%s</cyan><green>!</green>' % (bk_create.archname)))
+        print(self.color('<green>I: Done! You can find your backup in </green> <cyan>%s</cyan><green>!</green>' % (bk_create.dirs)))
         
     def ftp_backup(self, bk_type):
         if self.bk_type == "--fbz2":
@@ -133,8 +133,9 @@ e.g.: sbc -fg /path/to/file
         self.dest_dir = '/tmp/'
         print(self.color('<blue>I: Backing-up with %s format...</blue>' % (self.bk_archtype)))
         self.bk_arch_name = self.dest_dir + libcompress.compress().archname
-        compress.backup(self.bk_arch_name, self.dest_dir, self.bk_arch)
-        print(self.color('<blue>I: Uploading %s on %s:$s as %s in %s...</blue>' % (libcompress.compress().archname, self.host, self.port, self.user, self.directory)))
+        bk_create = libcompress.compress()
+        bk_create.backup(self.bk_arch_name, self.dest_dir, self.bk_arch)
+        print(self.color('<blue>I: Uploading %s on %s:$s as %s in %s...</blue>' % (bk_create.archname, host, port, user, directory)))
         libftp.upload(self.bk_arch_name, self.host, self.port, self.user, self.directory)
         print(self.color('<green>I: Done! Uploaded your backup as</green> <cyan>%s</cyan> <green>on</green> <cyan>%s</cyan><green>!</green>' % (libcompress.compress().archname, self.host)))
 
