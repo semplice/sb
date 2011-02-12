@@ -12,7 +12,7 @@ import os, sys, locale, gettext, libcompress, libftp
 #_ = gettext.gettext
 
 class sbcli:
-    def color(string):
+    def color(self, string):
         colors = {"default":0, "black":30, "red":31, "green":32, "yellow":33,
               "blue":34,"magenta":35, "cyan":36, "white":37, "black":38,
               "black":39} #33[%colors%m
@@ -45,70 +45,72 @@ e.g.: sbc -fg /path/to/file
         # This code analyzes the arguments given by user and executes the chosen action
         # of, if there's something wrong, shows an error to the user.
         if "--help" in sys.argv or "-h" in sys.argv:
-            print(help)
-        elif "--bz2" in sys.argv or "-b" in sys.argv:
-            self.backup('bz2')
-        elif "--gz" in sys.argv or "-g" in sys.argv:
-            self.backup('gz')
-        elif "--zip" in sys.argv or "-z" in sys.argv:
-            self.backup('zip')
-        elif "--fbz2" in sys.argv or "-fb" in sys.argv:
-            self.ftp_backup('bz2')
-        elif "--fgz" in sys.argv or "-fg" in sys.argv:
-            self.ftp_backup('gz')
-        elif "--fzip" in sys.argv or "-fz" in sys.argv:
-            self.ftp_backup('zip')
-        else:
             print(self.help)
-            print(sys.argv)
+        elif "--bz2" in sys.argv or "-b" in sys.argv:
+            self.backup(sys.argv[1])
+        elif "--gz" in sys.argv or "-g" in sys.argv:
+            self.backup(sys.argv[1])
+        elif "--zip" in sys.argv or "-z" in sys.argv:
+            self.backup(sys.argv[1])
+        elif "--fbz2" in sys.argv or "-fb" in sys.argv:
+            self.ftp_backup(sys.argv[1])
+        elif "--fgz" in sys.argv or "-fg" in sys.argv:
+            self.ftp_backup(sys.argv[1])
+        elif "--fzip" in sys.argv or "-fz" in sys.argv:
+            self.ftp_backup(sys.argv[1])
+        else:
+            unrec_arg = sys.argv[1]
+            print("sbc: unrecognized option '%s'" % (unrec_arg))
+            print("Try `sbc --help' for more information.")
             sys.exit(1)
             
     def backup(self, bk_format):
-        if self.bk_format == "--bz2":
+        if bk_format == "--bz2":
             self.bk_file = sys.argv[sys.argv.index("--bz2")+1]
             if sys.argv[sys.argv.index("--bz2")+2] != '':
                 self.dest_dir = sys.argv[sys.argv.index("--bz2")+2]
             else:
                 self.dest_dir = os.getcwd()
-            self.bk_archtype = 'bz2'
-        elif self.bk_format == "-b":
+            bk_archtype = 'bz2'
+        elif bk_format == "-b":
             self.bk_file = sys.argv[sys.argv.index("-b")+1]
             if sys.argv[sys.argv.index("-b")+2] != '':
                 self.dest_dir = sys.argv[sys.argv.index("-b")+2]
             else:
                 self.dest_dir = os.getcwd()
-            self.bk_archtype = 'bz2'
-        elif self.bk_format == "--gz":
+            bk_archtype = 'bz2'
+        elif bk_format == "--gz":
             self.bk_file = sys.argv[sys.argv.index("--gz")+1]
             if sys.argv[sys.argv.index("--gz")+2] != '':
                 self.dest_dir = sys.argv[sys.argv.index("--gz")+2]
             else:
                 self.dest_dir = os.getcwd()
-            self.bk_archtype = 'gz'
-        elif self.bk_format == "-g":
+            bk_archtype = 'gz'
+        elif bk_format == "-g":
             self.bk_file = sys.argv[sys.argv.index("-g")+1]
             if sys.argv[sys.argv.index("-g")+2] != '':
                 self.dest_dir = sys.argv[sys.argv.index("-g")+2]
             else:
                 self.dest_dir = os.getcwd()
-            self.bk_archtype = 'gz'
-        elif self.bk_format == "--zip":
+            bk_archtype = 'gz'
+        elif bk_format == "--zip":
             self.bk_file = sys.argv[sys.argv.index("--zip")+1]
             if sys.argv[sys.argv.index("--zip")+2] != '':
                 self.dest_dir = sys.argv[sys.argv.index("--zip")+2]
             else:
                 self.dest_dir = os.getcwd()
-            self.bk_archtype = 'zip'
-        elif self.bk_format == "-z":
+            bk_archtype = 'zip'
+        elif bk_format == "-z":
             self.bk_file = sys.argv[sys.argv.index("-z")+1]
             if sys.argv[sys.argv.index("--bz2")+2] != '':
                 self.dest_dir = sys.argv[sys.argv.index("-z")+2]
             else:
                 self.dest_dir = os.getcwd()
-            self.bk_archtype = 'zip'
-        print(self.color('<blue>I: Backing-up with %s format...</blue>' % (self.bk_archtype)))
-        compress.backup_gz(self.bk_file, self.dest_dir, self.bk_archtype)
-        print(self.color('<green>I: Done! You can find your backup in the current working dir as</green> <cyan>%s</cyan><green>!</green>' % (libcompress.compress().archname)))
+            bk_archtype = 'zip'
+        print(self.color('<blue>I: Backing-up with %s format...</blue>' % (bk_archtype)))
+        bk_create = libcompress.compress()
+        bk_create.backup(self.bk_file, self.dest_dir, bk_archtype)
+        print(self.color('<green>I: Done! You can find your backup in the current working dir as</green> <cyan>%s</cyan><green>!</green>' % (bk_create.archname)))
         
     def ftp_backup(self, bk_type):
         if self.bk_type == "--fbz2":

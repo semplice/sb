@@ -2,12 +2,12 @@
 # Semplice Backup 0.1
 # Formerly known as µBackup 5.
 
-import os, sys, tarfile, zipfile, libftp
+import os, sys, tarfile, zipfile, libftp, time
 
 class compress:
 	""" This class cointains the functions that helps the program to compress files. """
 	
-	def backup(self, bk_file, directory, ftp, mode):		
+	def backup(self, bk_file, directory, mode):		
 		if mode == "bz2":
 			ext = ".tar.bz2"
 			op = "bz2"
@@ -18,14 +18,14 @@ class compress:
 			ext = ".zip"
 			op = ""
 		
-		name = strftime("sb%Y-%m-%d_%h:%M", gmtime())
+		name = time.strftime("sb%Y-%m-%d_%H.%M")
 		if mode == "zip":
 			archive = zipfile.ZipFile(name + ext, "w")
-			archive.write(directory)
+			archive.write(bk_file)
 			archive.close()
 		else:
 			archive = tarfile.open(name + ext, "w:%s" % op)
-			archive.add(directory)
+			archive.add(bk_file)
 			archive.close()
 		
 		self.archname = name + ext
