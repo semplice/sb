@@ -7,8 +7,7 @@ import os, sys, tarfile, zipfile, libftp
 class compress:
 	""" This class cointains the functions that helps the program to compress files. """
 	
-	def backup(directory, ftp, mode):
-		
+	def backup(self, bk_file, directory, ftp, mode):		
 		if mode == "bz2":
 			ext = ".tar.bz2"
 			op = "bz2"
@@ -19,7 +18,7 @@ class compress:
 			ext = ".zip"
 			op = ""
 		
-		name = strftime(pattern, gmtime())
+		name = strftime("sb%Y-%m-%d_%h:%M", gmtime())
 		if mode == "zip":
 			archive = zipfile.ZipFile(name + ext, "w")
 			archive.write(directory)
@@ -29,18 +28,18 @@ class compress:
 			archive.add(directory)
 			archive.close()
 		
-		archname = name + ext
-		dirs = directory
+		self.archname = name + ext
+		self.dirs = directory
 
-	def backup_gz(directory, ftp):
-		self.backup(directory, ftp, "gz")
-	
-	def backup_bz2(directory, ftp):
-		self.backup(directory, ftp, "bz2")
-	
-	def backup_zip(directory, ftp):
-		self.backup(directory, ftp, "zip")
-
+#	def backup_gz(directory, ftp):
+#		self.backup(directory, ftp, "gz")
+#	
+#	def backup_bz2(directory, ftp):
+#		self.backup(directory, ftp, "bz2")
+#	
+#	def backup_zip(directory, ftp):
+#		self.backup(directory, ftp, "zip")
+#
 #class libcompress:
 #    # The function that makes backups in tar.bz2 format
 #    def backup_bz2(directory, ftp):
