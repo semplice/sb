@@ -46,6 +46,8 @@ class sbGui:
 		self.bkback4_btn = self.builder.get_object("bkback4_bkbtn")
 		# Page 2
 		self.addfile_btn = self.builder.get_object("addfile_bkbtn")
+		self.rmfile_btn = self.builder.get_object("remove_bkbtn")
+		self.treefiles = self.builder.get_object("treeview1")
 		# Page 3
 		self.bz2arch = self.builder.get_object("rb_bz2")
 		self.gzarch = self.builder.get_object("rb_gz")
@@ -76,7 +78,7 @@ class sbGui:
 		self.abtboxbtn.connect("activate", self.aboutbox)
 		self.quitbtn.connect("activate", self.quit)
 		# Add file dialog
-		#self.fc_backup_add.connect("clicked", self.addtobklist)
+		self.fc_backup_add.connect("clicked", self.addtobklist)
 		# Restore dialog
 		self.fcr_openbtn.connect("clicked", self.restore_bk)
 		# Home page
@@ -92,7 +94,14 @@ class sbGui:
 		self.bkback3_btn.connect("clicked", self.page_prev)
 		self.bkback4_btn.connect("clicked", self.page_prev)
 		# Page 2
+		self.cell = gtk.CellRendererText()
+		self.file_col = gtk.TreeViewColumn("File name", self.cell, text=0)
+		self.treefiles.append_column(self.file_col)
 		self.addfile_btn.connect("clicked", self.add_file)
+		self.rmfile_btn.connect("clicked", self.rmfrombklist)
+		cell = gtk.CellRendererText()
+		self.f_list = gtk.ListStore(str)
+		self.treefiles.set_model(self.f_list)
 		# Page 5 - Start backup!
 		self.bkstart_btn.connect("clicked", self.start_bk)
 		
@@ -120,13 +129,23 @@ class sbGui:
 		self.addfiledlg.show()
 		result = self.addfiledlg.run()
 		self.addfiledlg.hide()
-				
+
+	def addtobklist(self, obj):
+		self.f_list.append(self.addfiledlg.get_filenames())
+		
+	def rmfrombklist(self, obj):
+		list_selection = self.treefiles.get_selection()
+		model, list_selected = list_selection.get_selected()
+		if list_selected is not None:
+			self.f_list.remove(list_selected)
+
 	def page_one(self, obj):
 		if obj == self.bkstart_btn:
 			self.lb_status.set_label("Ready.")
 			self.bkstart_btn.set_label("Start!")
 			self.bkstart_btn.connect("clicked", self.start_bk)
 			self.backuprogress.set_fraction(0)
+			print(obj)
 		self.pages.set_current_page(0)
 
 	def page_next(self, obj):
@@ -199,11 +218,12 @@ class sbGui:
 			bk_ftp.upload(self.bk_arch_name, self.host, self.port, self.user, self.directory)
 			self.localdest = "ftp://%s@%s:%s/%s" % (self.ftpuser, self.ftpsrv, self.ftport, self.ftpdir)
 			print("Localdest: %s" % (self.localdest))
+		print(self.treefiles.get_columns())
 		self.bkstart_btn.set_label("Finish!")
 		self.lb_status.set_label("Finished! Backup saved in: %s" % (self.localdest))
 		self.backuprogress.set_fraction(1.00)
 		self.bkstart_btn.set_sensitive(True)
-		self.bkstart_btn.connect("clicked", self.page_one)
+		self.bkstart_btn.connect("clicked", self.quit)
 			
 	def restore_bk(self, obj):
 		self.restorefile = self.fc_restore.get_uri()

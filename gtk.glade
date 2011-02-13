@@ -3,6 +3,7 @@
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
   <object class="GtkListStore" id="liststore1"/>
+  <object class="GtkListStore" id="liststore2"/>
   <object class="GtkWindow" id="semplice_bkt">
     <property name="width_request">529</property>
     <property name="height_request">365</property>
@@ -223,7 +224,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkToolButton" id="remove_bktbtn">
+                      <object class="GtkToolButton" id="remove_bkbtn">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Remove</property>
                         <property name="use_underline">True</property>
@@ -244,7 +245,6 @@
                   <object class="GtkTreeView" id="treeview1">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="model">liststore1</property>
                   </object>
                   <packing>
                     <property name="position">2</property>
