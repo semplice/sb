@@ -114,6 +114,9 @@ class sbGui:
 		}
 
 		self.builder.connect_signals(dic)
+		
+		# Files to backup dictionary
+		self.to_backup = []
 
 	def aboutbox(self, obj):
 		self.about.show()
@@ -131,13 +134,25 @@ class sbGui:
 		self.addfiledlg.hide()
 
 	def addtobklist(self, obj):
-		self.f_list.append(self.addfiledlg.get_filenames())
+		files = self.addfiledlg.get_filenames()
+		
+		for thing in files:
+			if thing in self.to_backup:
+				# The file is already in to_backup
+				print("File %s already in list" % thing) # FIXME: error dialog ;)
+			else:
+				self.f_list.append((thing,)) # Weird things: does not accept list directly (that is provided by files itself) but a simple tuple (or list) with one thing works. Uh?
+				self.to_backup.append(thing)
+		
+		print(self.to_backup)
 		
 	def rmfrombklist(self, obj):
 		list_selection = self.treefiles.get_selection()
 		model, list_selected = list_selection.get_selected()
 		if list_selected is not None:
 			self.f_list.remove(list_selected)
+			print self.f_list.get_value(list_selected, 0)
+			self.to_backup.remove(self.f_list.get_value(list_selected, 0))
 
 	def page_one(self, obj):
 		if obj == self.bkstart_btn:

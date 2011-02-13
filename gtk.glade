@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <interface>
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
@@ -8,6 +8,7 @@
     <property name="width_request">529</property>
     <property name="height_request">365</property>
     <property name="title" translatable="yes">Semplice Backup</property>
+    <property name="window_position">center</property>
     <property name="icon">Logos/icon.png</property>
     <signal name="destroy" handler="on_semplice_bkt_destroy"/>
     <child>
@@ -16,7 +17,6 @@
         <child>
           <object class="GtkMenuBar" id="menubar1">
             <property name="visible">True</property>
-            <property name="ubuntu_local">True</property>
             <child>
               <object class="GtkMenuItem" id="menuitem1">
                 <property name="visible">True</property>
@@ -25,7 +25,6 @@
                 <child type="submenu">
                   <object class="GtkMenu" id="menu1">
                     <property name="visible">True</property>
-                    <property name="ubuntu_local">True</property>
                     <child>
                       <object class="GtkImageMenuItem" id="quit_menubtn">
                         <property name="label">gtk-quit</property>
@@ -46,7 +45,6 @@
                 <child type="submenu">
                   <object class="GtkMenu" id="menu2">
                     <property name="visible">True</property>
-                    <property name="ubuntu_local">True</property>
                     <child>
                       <object class="GtkMenuItem" id="pref_menubtn">
                         <property name="visible">True</property>
@@ -66,7 +64,6 @@
                 <child type="submenu">
                   <object class="GtkMenu" id="menu3">
                     <property name="visible">True</property>
-                    <property name="ubuntu_local">True</property>
                     <child>
                       <object class="GtkImageMenuItem" id="about_menubtn">
                         <property name="label">gtk-about</property>
@@ -245,6 +242,8 @@
                   <object class="GtkTreeView" id="treeview1">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="rules_hint">True</property>
+                    <property name="rubber_banding">True</property>
                   </object>
                   <packing>
                     <property name="position">2</property>
@@ -637,7 +636,7 @@
                       <object class="GtkEntry" id="ftpsrv_entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="invisible_char">•</property>
+                        <property name="invisible_char">&#x2022;</property>
                       </object>
                       <packing>
                         <property name="left_attach">2</property>
@@ -650,7 +649,7 @@
                       <object class="GtkEntry" id="ftport_entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="invisible_char">•</property>
+                        <property name="invisible_char">&#x2022;</property>
                       </object>
                       <packing>
                         <property name="left_attach">2</property>
@@ -663,7 +662,7 @@
                       <object class="GtkEntry" id="ftpdir_entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="invisible_char">•</property>
+                        <property name="invisible_char">&#x2022;</property>
                       </object>
                       <packing>
                         <property name="left_attach">2</property>
@@ -702,7 +701,7 @@
                       <object class="GtkEntry" id="ftpuser_entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="invisible_char">•</property>
+                        <property name="invisible_char">&#x2022;</property>
                       </object>
                       <packing>
                         <property name="left_attach">2</property>
@@ -716,7 +715,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="visibility">False</property>
-                        <property name="invisible_char">•</property>
+                        <property name="invisible_char">&#x2022;</property>
                       </object>
                       <packing>
                         <property name="left_attach">2</property>
@@ -1153,7 +1152,7 @@
     <property name="type_hint">normal</property>
     <property name="program_name">Semplice Backup</property>
     <property name="version">0.1</property>
-    <property name="copyright" translatable="yes">Copyright © 2011 Semplice Team</property>
+    <property name="copyright" translatable="yes">Copyright &#xA9; 2011 Semplice Team</property>
     <property name="comments" translatable="yes">A simple backup tool.</property>
     <property name="website">http://semplice-linux.sourceforge.net</property>
     <property name="website_label" translatable="yes">Semplice Linux Home Page</property>
@@ -1860,6 +1859,7 @@ Luca B. &lt;sidtux@gmail.com&gt;
   <object class="GtkFileChooserDialog" id="fc_restore">
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Choose a file...</property>
+    <property name="window_position">center</property>
     <property name="icon">Logos/icon.png</property>
     <property name="type_hint">normal</property>
     <child internal-child="vbox">
@@ -1917,7 +1917,9 @@ Luca B. &lt;sidtux@gmail.com&gt;
   </object>
   <object class="GtkFileChooserDialog" id="fc_backup">
     <property name="border_width">5</property>
+    <property name="window_position">center</property>
     <property name="type_hint">normal</property>
+    <property name="select_multiple">True</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox4">
         <property name="visible">True</property>
