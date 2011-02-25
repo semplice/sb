@@ -18,7 +18,7 @@ class sbGui:
 		if self.window:
 			self.window.connect("destroy", gtk.main_quit)
 		
-		# Get all objects in the interface
+		# Get all the objects in the interface
 		
 		# Main window
 		self.pages = self.builder.get_object("pages")
@@ -118,24 +118,27 @@ class sbGui:
 		# Files to backup dictionary
 		self.to_backup = []
 
+	# The about dialog
 	def aboutbox(self, obj):
 		self.about.show()
 		result = self.about.run()
 		self.about.hide()
 		
+	# FileChooser dialog
 	def restorebox(self, obj):
 		self.fc_restore.show()
 		result = self.fc_restore.run()
 		self.fc_restore.hide()
 
+	# AddFile dialog
 	def add_file(self, obj):
 		self.addfiledlg.show()
 		result = self.addfiledlg.run()
 		self.addfiledlg.hide()
 
+	# Adds a file to the list
 	def addtobklist(self, obj):
 		files = self.addfiledlg.get_filenames()
-		
 		for thing in files:
 			if thing in self.to_backup:
 				# The file is already in to_backup
@@ -143,9 +146,8 @@ class sbGui:
 			else:
 				self.f_list.append((thing,)) # Weird things: does not accept list directly (that is provided by files itself) but a simple tuple (or list) with one thing works. Uh?
 				self.to_backup.append(thing)
-		
-		print(self.to_backup)
-		
+	
+	# Removes the selected file from the list
 	def rmfrombklist(self, obj):
 		list_selection = self.treefiles.get_selection()
 		model, list_selected = list_selection.get_selected()
@@ -154,36 +156,34 @@ class sbGui:
 			print self.f_list.get_value(list_selected, 0)
 			self.to_backup.remove(self.f_list.get_value(list_selected, 0))
 
+    # Go to the "home page" of the notebook
 	def page_one(self, obj):
 		if obj == self.bkstart_btn:
 			self.lb_status.set_label("Ready.")
 			self.bkstart_btn.set_label("Start!")
 			self.bkstart_btn.connect("clicked", self.start_bk)
 			self.backuprogress.set_fraction(0)
-			print(obj)
 		self.pages.set_current_page(0)
 
+	# Go to the next page of the notebook
 	def page_next(self, obj):
 		""" This function will change the current notebook page. """
 		if obj == self.bknext2_btn:
 			if self.bz2arch.get_active() == True:
-				self.archtype = ".tar.bz2"
-				print("I: .tar.bz2 archive chosen")
+				self.archtype = "bz2"
 			elif self.gzarch.get_active() == True:
-				self.archtype = ".tar.gz"
-				print("I: .tar.gz archive chosen")
+				self.archtype = "gz"
 			elif self.ziparch.get_active() == True:
-				self.archtype = ".zip"
-				print("I: .zip archive chosen")
+				self.archtype = "zip"
 			elif self.sbiarch.get_active() == True:
-				self.archtype = ".sbi"
-				print("I: .sbi archive chosen")
+				self.archtype = "sbi"
 		self.pages.next_page()
 		
 	def page_prev(self, obj):
 		""" This function will change the current notebook page. """
 		self.pages.prev_page()
 		
+	# Handles the radiogroup of the backup destination
 	def rbk_activate(self, obj):
 		if self.rb_localdir.get_active() == True:
 			self.fc_localdir.set_sensitive(True)
@@ -210,16 +210,16 @@ class sbGui:
 			self.ftpuser_entry.set_sensitive(True)
 			self.ftpass_entry.set_sensitive(True)
 	
+	# Starts the backup
 	def start_bk(self, obj):
 		self.bkback4_btn.set_sensitive(False)
 		self.bkstart_btn.set_sensitive(False)
 		self.archformat = self.archtype
-		print("I: Starting backup...")
-		print("You have chosen the following archive format: %s" % (self.archformat))
 		if self.rb_localdir.get_active() == True:
 			self.localdest = self.fc_localdir.get_uri()
 			self.param, self.localdest = self.localdest.split("file://",1)
-			print("You have chosen to save the backup in the following local dir: %s" % (self.localdest))
+			bk_local = libcompress.compress()
+			bk_local.backup(self.to_backup, self.localdest, self.archtype)
 		elif self.rb_ftpdir.get_active() == True:
 			self.ftpsrv = self.ftpsrv_entry.get_text()
 			if self.ftport_entry.get_text() != "":
@@ -232,18 +232,17 @@ class sbGui:
 			bk_ftp = libftp.libftp()
 			bk_ftp.upload(self.bk_arch_name, self.host, self.port, self.user, self.directory)
 			self.localdest = "ftp://%s@%s:%s/%s" % (self.ftpuser, self.ftpsrv, self.ftport, self.ftpdir)
-			print("Localdest: %s" % (self.localdest))
-		print(self.treefiles.get_columns())
 		self.bkstart_btn.set_label("Finish!")
 		self.lb_status.set_label("Finished! Backup saved in: %s" % (self.localdest))
 		self.backuprogress.set_fraction(1.00)
+		self.bkstart_btn.disconnect(self.bkstart_btn.connect("clicked", self.start_bk))
 		self.bkstart_btn.set_sensitive(True)
 		self.bkstart_btn.connect("clicked", self.quit)
 			
+	# Restores the backup [TODO]
 	def restore_bk(self, obj):
 		self.restorefile = self.fc_restore.get_uri()
 		self.param, self.restorefile = self.restorefile.split("file://",1)
-		print("You have chosen to restore this archive: %s" % (self.restorefile))
 		self.pages.set_current_page(5)
 			
 	def quit(self, obj):

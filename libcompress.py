@@ -20,12 +20,12 @@ class compress:
 		
 		name = time.strftime("sb%Y-%m-%d_%H.%M")
 		if mode == "zip":
-			archive = zipfile.ZipFile(directory + name + ext, "w")
+			archive = zipfile.ZipFile(directory + '/' + name + ext, "w")
 			for x in bk_file:
 				archive.write(x)
 			archive.close()
 		else:
-			archive = tarfile.open(directory + name + ext, "w:%s" % op)
+			archive = tarfile.open(directory + '/' + name + ext, "w:%s" % op)
 			for x in bk_file:
 				archive.add(x)
 			archive.close()

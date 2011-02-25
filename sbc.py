@@ -63,6 +63,7 @@ e.g.: sbc -fg /path/to/file
             string = string.replace("<%s>" % color, color_string).replace("</%s>" % color, "\033[0m")
         return string
 
+    # Creates an archive into the given dir
     def backup(self, bk_format):
         if bk_format == "--bz2":
             self.bk_file = sys.argv[sys.argv.index("--bz2")+1]
@@ -110,7 +111,8 @@ e.g.: sbc -fg /path/to/file
         bk_create = libcompress.compress()
         bk_create.backup(self.bk_file, self.dest_dir, bk_archtype)
         print(self.color('<green>I: Done! You can find your backup in </green> <cyan>%s</cyan><green>!</green>' % (bk_create.dirs)))
-        
+       
+    # Creates a backup and uploads it on an FTP server
     def ftp_backup(self, bk_type):
         if self.bk_type == "--fbz2":
             self.bk_file = sys.argv[sys.argv.index("--fbz2")+1]
