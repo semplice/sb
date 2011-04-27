@@ -3,7 +3,7 @@
 # Semplice Backup 0.1
 # Formerly known as µBackup 5.
 
-import os, sys, gtk, pygtk, libcompress, libftp
+import os, sys, gtk, pygtk, libcompress, libftp, threading
 
 class sbGui:
 
@@ -232,9 +232,9 @@ class sbGui:
 			bk_ftp = libftp.libftp()
 			bk_ftp.upload(self.bk_arch_name, self.host, self.port, self.user, self.directory)
 			self.localdest = "ftp://%s@%s:%s/%s" % (self.ftpuser, self.ftpsrv, self.ftport, self.ftpdir)
+		self.backuprogress.set_fraction(1.00)
 		self.bkstart_btn.set_label("Finish!")
 		self.lb_status.set_label("Finished! Backup saved in: %s" % (self.localdest))
-		self.backuprogress.set_fraction(1.00)
 		self.bkstart_btn.disconnect(self.bkstart_btn.connect("clicked", self.start_bk))
 		self.bkstart_btn.set_sensitive(True)
 		self.bkstart_btn.connect("clicked", self.quit)
