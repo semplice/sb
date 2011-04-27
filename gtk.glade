@@ -5,10 +5,12 @@
   <object class="GtkListStore" id="liststore1"/>
   <object class="GtkListStore" id="liststore2"/>
   <object class="GtkWindow" id="semplice_bkt">
-    <property name="width_request">529</property>
-    <property name="height_request">365</property>
+    <property name="width_request">425</property>
+    <property name="height_request">300</property>
     <property name="title" translatable="yes">Semplice Backup</property>
     <property name="window_position">center</property>
+    <property name="default_width">650</property>
+    <property name="default_height">410</property>
     <property name="icon">Logos/icon.png</property>
     <signal name="destroy" handler="on_semplice_bkt_destroy"/>
     <child>
@@ -165,7 +167,9 @@
                                 <child>
                                   <object class="GtkImage" id="image3">
                                     <property name="visible">True</property>
-                                    <property name="pixbuf">icons/new.svg</property>
+                                    <property name="pixel_size">48</property>
+                                    <property name="icon_name">document-new</property>
+                                    <property name="icon-size">6</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -228,7 +232,8 @@
                                 <child>
                                   <object class="GtkImage" id="image5">
                                     <property name="visible">True</property>
-                                    <property name="pixbuf">icons/restore.svg</property>
+                                    <property name="pixel_size">48</property>
+                                    <property name="icon_name">extract-archive</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -281,6 +286,9 @@
                           </packing>
                         </child>
                         <child>
+                          <placeholder/>
+                        </child>
+                        <child>
                           <object class="GtkAlignment" id="alignment4">
                             <property name="visible">True</property>
                             <child>
@@ -288,11 +296,8 @@
                             </child>
                           </object>
                           <packing>
-                            <property name="position">3</property>
+                            <property name="position">4</property>
                           </packing>
-                        </child>
-                        <child>
-                          <placeholder/>
                         </child>
                       </object>
                       <packing>
