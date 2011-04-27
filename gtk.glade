@@ -136,7 +136,7 @@
                         <child>
                           <object class="GtkLabel" id="label21">
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">Choose what do you want to so.</property>
+                            <property name="label" translatable="yes">Choose what do you want to do.</property>
                           </object>
                           <packing>
                             <property name="position">1</property>
