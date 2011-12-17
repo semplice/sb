@@ -5,7 +5,7 @@ Priority: optional
 Build-Depends: python-all (>= 2.6.6-3), debhelper (>= 7)
 Standards-Version: 3.9.1
 
-Package: python-sb
+Package: semplice-backup
 Architecture: all
 Depends: ${misc:Depends}, ${python:Depends}
 Description: A simple backup program.
