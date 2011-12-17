@@ -8,7 +8,7 @@ from distutils.core import setup
 
 setup(name = "sb",
       version = "0.1",
-      author = 'Luca "sidtux" B.',
+      author = 'Luca B. (tuxpenguin)',
       author_email = "sidtux@gmail.com",
       description = "A simple backup program.",
       url = "http://semplice-linux.sourceforge.net",

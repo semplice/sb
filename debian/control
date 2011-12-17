@@ -1,5 +1,5 @@
 Source: sb
-Maintainer: Luca "sidtux" B. <sidtux@gmail.com>
+Maintainer: Luca B. (tuxpenguin) <sidtux@gmail.com>
 Section: python
 Priority: optional
 Build-Depends: python-all (>= 2.6.6-3), debhelper (>= 7)
