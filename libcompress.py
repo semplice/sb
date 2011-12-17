@@ -1,8 +1,8 @@
 # -*- coding=utf-8 -*-
-# Semplice Backup 0.1
-# Formerly known as µBackup 5.
+# Semplice Backup Compress Library
+# Copyright © 2011 Semplice Team. All rights reserved.
 
-import os, sys, tarfile, zipfile, libftp, time
+import os, sys, tarfile, zipfile, libdb, time
 
 class compress:
 	""" This class cointains the functions that helps the program to compress files. """
@@ -23,12 +23,18 @@ class compress:
 			archive = zipfile.ZipFile(directory + '/' + name + ext, "w")
 			for x in bk_file:
 				archive.write(x)
+            archive.write('/tmp/.files.db')
 			archive.close()
 		else:
 			archive = tarfile.open(directory + '/' + name + ext, "w:%s" % op)
 			for x in bk_file:
 				archive.add(x)
+            archive.add('/tmp/.files.db')
 			archive.close()
 		
 		self.archname = name + ext
 		self.dirs = os.path.abspath(directory + "/" + name + ext)
+
+    #def restore(self, bk_file):
+        
+        

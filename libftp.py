@@ -1,6 +1,6 @@
 # -*- coding=utf-8 -*-
-# Semplice Backup 0.1
-# Formerly known as µBackup 5.
+# Semplice Backup FTP Library
+# Copyright © 2011 Semplice Team. All rights reserved.
 # The following lines import necessary modules
 
 import os, sys, ftplib

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding=utf-8 -*-
-# Semplice Backup 0.1
-# Formerly known as µBackup 5.
+# Semplice Backup Console
+# Copyright © 2011 Semplice Team. All rights reserved.
 
 import os, sys, locale, gettext, libcompress, libftp
 
@@ -11,10 +11,12 @@ import os, sys, locale, gettext, libcompress, libftp
 #gettext.textdomain('sb')
 #_ = gettext.gettext
 
+__version__ = "0.1"
+
 class sbcli:
     def __init__(self):
         # Help text
-        self.help = """Semplice Backup 0.1
+        self.help = """Semplice Backup %s
 Usage: sbc <option> <directory>
 
 Options:
@@ -26,7 +28,7 @@ Options:
 
 Just add 'f' before the archive format you want to upload the archive on the FTP server you need to backup to.
 e.g.: sbc -fg /path/to/file
-      sbc --fgz /path/to/file"""
+      sbc --fgz /path/to/file""" % (__version__)
     
         # Checks that the user has passed an argument
         if len(sys.argv) < 2:
