@@ -12,7 +12,7 @@ setup(name = "sb",
       author_email = "sidtux@gmail.com",
       description = "A simple backup program.",
       url = "http://semplice-linux.sourceforge.net",
-      #packages=['sb'],
+      packages=['sb'],
       package_dir = {'': ''},
       classifiers=[
           "Development Status :: 3 - Alpha",
