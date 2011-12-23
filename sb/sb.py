@@ -36,7 +36,7 @@ class sbGui:
     def __init__(self):
         # Initialize the main window
         self.builder = Gtk.Builder()
-        self.builder.add_from_file("gtk.ui")
+        self.builder.add_from_file("/usr/share/sb/sb/gtk.ui")
         self.window = self.builder.get_object("sb_main")
         
         if self.window:
