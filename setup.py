@@ -14,7 +14,7 @@ setup(name = "sb",
       url = "http://semplice-linux.sourceforge.net",
       packages=['sb'],
       scripts=['sb.py','sbc.py'],
-      data_files=[('/usr/share/sb/sb/', ['sb/Logos/', 'sb/po/', 'sb/gtk.ui'])]
+      data_files=[('/usr/share/sb/sb/', ['sb/Logos/', 'sb/po/', 'sb/gtk.ui'])],
       classifiers=[
           "Development Status :: 3 - Alpha",
           "Topic :: Utilities",

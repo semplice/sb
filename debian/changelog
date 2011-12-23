@@ -1,3 +1,9 @@
+sb (0.1-2) pulse; urgency=low
+
+  * Fixed setup.py. Now with ui files and logos.
+
+ -- Luca B. (tuxpenguin) <sidtux@gmail.com>  Fri, 23 Dec 2011 17:38:54 +0100
+
 sb (0.1-1) pulse; urgency=low
 
   * Initial release.
