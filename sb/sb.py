@@ -27,7 +27,7 @@ import os, sys, gi, libcompress, libftp
 from gi.repository import Gtk
 gi.require_version('Gtk', '3.0')
 
-__version__ = "0.1"
+__version__ = "0.2"
 
 class sbGui:
 

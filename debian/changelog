@@ -1,4 +1,4 @@
-sb (0.1-2) pulse; urgency=low
+sb (0.2) pulse; urgency=low
 
   * Fixed setup.py. Now with ui files and logos.
 

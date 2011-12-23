@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Semplice Backup
+Comment=A simple backup program.
+Exec=sb
+Icon=sb
+Terminal=false
+Categories=Utility;Archiving

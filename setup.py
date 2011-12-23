@@ -42,6 +42,8 @@ def generate_tree(directory, where):
 	os.chdir(current_dir)
 
 generate_tree("sb", "/usr/share/sb/")
+tree.append("sb/Logos/sb.png", "/usr/share/pixmaps/")
+tree.append("sb/Logos/sb.xpm", "/usr/share/pixmaps/")
 
 setup(name = "sb",
       version = "0.1",
