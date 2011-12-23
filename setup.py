@@ -13,7 +13,6 @@ setup(name = "sb",
       description = "A simple backup program.",
       url = "http://semplice-linux.sourceforge.net",
       packages=['sb'],
-      package_dir = {'': ''},
       classifiers=[
           "Development Status :: 3 - Alpha",
           "Topic :: Utilities",
