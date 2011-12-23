@@ -4,11 +4,12 @@
 # Copyright © 2011 Semplice Team. All rights reserved.
 
 import os, glob
+import commands
 from distutils.core import setup
 
 # Taken from pylaivng (https://launchpad.net/pylaivng) setup.py. © Eugenio "g7" Paolantonio
 tree = []
-current_dir = os.getenv("PWD")
+current_dir = commands.getoutput("pwd")
 
 def generate_tree(directory, where):
 	""" Generates a directory tree to be used with data_files.
