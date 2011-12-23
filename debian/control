@@ -2,11 +2,14 @@ Source: sb
 Maintainer: Luca B. (tuxpenguin) <sidtux@gmail.com>
 Section: python
 Priority: optional
-Build-Depends: python-all (>= 2.6.6-3), debhelper (>= 7)
-Standards-Version: 3.9.1
+Build-Depends: python (>= 2.7), debhelper (>= 7)
+Standards-Version: 3.9.2
 
 Package: semplice-backup
 Architecture: all
 Depends: ${misc:Depends}, ${python:Depends}
 Description: A simple backup program.
+ A simple backup program.
+ .
+ 
 
